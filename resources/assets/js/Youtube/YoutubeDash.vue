@@ -6,14 +6,20 @@
 
 <script>
     import Search from './Search';
+
     export default {
-        created(){
-          Search({
-              apiKey : 'asdf',
-              term: 'laravel repository'
-          });
+        created() {
+            Search({
+                apiKey: 'AIzaSyDAnYDf-Tgdkgy83OHBiFAN4G_CQUewTSs',
+                term: 'laravel repository'
+            }, response => this.videos = response);
         },
-        name: "YoutubeDash"
+        data() {
+            return {
+                videos: null
+            }
+        },
+
     }
 </script>
 

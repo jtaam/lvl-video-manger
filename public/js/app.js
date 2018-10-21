@@ -47586,7 +47586,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47868,15 +47868,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     created: function created() {
+        var _this = this;
+
         __WEBPACK_IMPORTED_MODULE_0__Search___default()({
-            apiKey: 'asdf',
+            apiKey: 'AIzaSyDAnYDf-Tgdkgy83OHBiFAN4G_CQUewTSs',
             term: 'laravel repository'
+        }, function (response) {
+            return _this.videos = response;
         });
     },
-
-    name: "YoutubeDash"
+    data: function data() {
+        return {
+            videos: null
+        };
+    }
 });
 
 /***/ }),
@@ -47915,13 +47923,18 @@ module.exports = function (options, callback) {
 
     var params = {
         part: 'snippet',
-        key: 'options.apiKey',
+        key: options.apiKey,
         q: options.term,
         maxResults: options.items ? options.items : 5,
         type: 'video'
     };
 
-    axios.get(BASE_URL, { params: params }).then(function (response) {}).catch(function (error) {
+    axios.get(BASE_URL, { params: params }).then(function (response) {
+        // console.log('search response', response);
+        if (callback) {
+            callback(response.data.items);
+        }
+    }).catch(function (error) {
         return console.error(error);
     });
 };
