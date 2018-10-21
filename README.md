@@ -1,1 +1,2 @@
-# lvl-video-manger
+# video manager
+Laravel and Vuejs
