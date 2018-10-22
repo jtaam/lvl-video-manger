@@ -54688,7 +54688,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54703,12 +54703,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     created: function created() {
         if (this.$route.params.video === undefined) {
             this.$router.push({ name: 'youtube-dashboard' });
         }
+        this.videoId = this.$route.params.id;
+        this.url = 'https://www.youtube.com/embed/${this.videoId}';
+        this.video = this.$route.params.video;
+    },
+    data: function data() {
+        return {
+            videoId: null,
+            video: null,
+            url: null
+        };
     }
 });
 
@@ -54720,7 +54743,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("p", [_vm._v("Detail of the video")])
+  return _vm.video
+    ? _c("div", { staticClass: "VideoDetail__wrapper row" }, [
+        _c("div", { staticClass: "col-sm-8 com-sm-push-2" }, [
+          _c("h2", [_vm._v(_vm._s(_vm.video.snippet.title))]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("small", [
+            _vm._v("Channel: " + _vm._s(_vm.video.snippet.channelTitle))
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.video.snippet.description))]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "embed-responsive embed-responsive-16by9" },
+            [
+              _c("iframe", {
+                staticClass: "embed-responsive-item",
+                attrs: {
+                  src: _vm.url,
+                  width: "560",
+                  height: "315",
+                  frameborder: "0",
+                  allow: "encrypted-media"
+                }
+              })
+            ]
+          )
+        ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
