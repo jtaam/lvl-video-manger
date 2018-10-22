@@ -1,10 +1,14 @@
 <template>
-    
+    <p>Detail of the video</p>
 </template>
 
 <script>
     export default {
-        name: "Video"
+        created(){
+            if (this.$route.params.video === undefined){
+                this.$router.push({name:'youtube-dashboard'});
+            }
+        }
     }
 </script>
 
