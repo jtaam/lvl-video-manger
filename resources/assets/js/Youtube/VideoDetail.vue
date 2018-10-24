@@ -1,6 +1,6 @@
 <template>
     <div class="VideoDetail__wrapper row" v-if="video">
-        <div class="col-sm-8 com-sm-push-2">
+        <div class="col-sm-8 sm-push-2">
             <h2>{{video.snippet.title}}</h2>
             <br>
             <small>Channel: {{video.snippet.channelTitle}}</small>
@@ -12,11 +12,19 @@
                 </iframe>
             </div>
         </div>
+        <div class="col-sm-8 sm-push-2">
+            <CommentWrapper/>
+        </div>
     </div>
 </template>
 
 <script>
+    import CommentWrapper from './Comments/CommentWrapper';
+
     export default {
+        components:{
+            CommentWrapper
+        },
         created(){
             if (this.$route.params.video === undefined){
                 this.$router.push({name:'youtube-dashboard'});
