@@ -7,7 +7,9 @@
  */
 namespace App\Services;
 
+use App\Mail\ActivateUserAccount;
 use App\User;
+use Illuminate\Support\Facades\Mail;
 
 class AccountActivation{
     private function generateToken(){
@@ -18,5 +20,7 @@ class AccountActivation{
         $user = User::find($registeredUser->user->id);
         $user->activation_token = $this->generateToken();
         $user->save();
+
+        Mail::to($user)->queue(new ActivateUserAccount($user));
     }
 }
