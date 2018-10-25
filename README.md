@@ -1,2 +1,2 @@
-# video manager
+# Youtube Video Manager
 Laravel and Vuejs

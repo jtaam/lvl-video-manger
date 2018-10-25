@@ -32,7 +32,7 @@
             });
 
             window.eventBus.$on('searchResultFromYoutube', videos => {
-                console.log('search result', videos);
+                // console.log('search result', videos);
                 this.loading = false;
                 this.videos = videos;
             });

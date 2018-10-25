@@ -52199,7 +52199,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
 
         window.eventBus.$on('searchResultFromYoutube', function (videos) {
-            console.log('search result', videos);
+            // console.log('search result', videos);
             _this.loading = false;
             _this.videos = videos;
         });
@@ -52376,7 +52376,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }, 1);
         },
         imageProgress: function imageProgress(instance, img) {
-            console.log('instance', instance, 'img', img);
+            // console.log('instance',instance, 'img',img);
             this.counter++;
             if (this.counter == this.videos.length) {
                 this.relayoutTheGrid();
@@ -54822,7 +54822,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54833,10 +54833,12 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Comment__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Comment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Comment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CommentAdd__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CommentAdd___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__CommentAdd__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Comment__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Comment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Comment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CommentAdd__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CommentAdd___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__CommentAdd__);
 //
 //
 //
@@ -54844,13 +54846,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "CommentWrapper",
-    components: { Comment: __WEBPACK_IMPORTED_MODULE_0__Comment___default.a, CommentAdd: __WEBPACK_IMPORTED_MODULE_1__CommentAdd___default.a }
+
+    components: {
+        Comment: __WEBPACK_IMPORTED_MODULE_1__Comment___default.a, CommentAdd: __WEBPACK_IMPORTED_MODULE_2__CommentAdd___default.a
+    },
+
+    created: function created() {
+        var _this = this;
+
+        window.eventBus.$on('commentAddEvent', function (comment) {
+            return _this.handleNewComment(comment);
+        });
+        this.loadComments();
+    },
+    data: function data() {
+        return {
+            comments: []
+        };
+    },
+
+    methods: {
+        handleNewComment: function handleNewComment(comment) {
+            this.comments.unshift(comment);
+        },
+        loadComments: function loadComments() {
+            var _this2 = this;
+
+            var url = window.Laravel.basePath + 'api/video/comments';
+            var postData = {
+                videoId: this.$route.params.id
+            };
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url, postData).then(function (response) {
+                _this2.comments = response.data;
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -54939,7 +54978,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54954,9 +54993,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "Comment"
+    name: "Comment",
+
+    props: ['comment']
 });
 
 /***/ }),
@@ -54967,7 +55014,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("Comment")])
+  return _c("div", { staticClass: "comment__wrapper" }, [
+    _c("div", { staticClass: "card-body" }, [
+      _vm._v("\n        " + _vm._s(_vm.comment.body) + "\n        "),
+      _c("br"),
+      _vm._v(" "),
+      _c("small", { staticClass: "text-muted" }, [
+        _vm._v(_vm._s(_vm.comment.created_at))
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55065,7 +55121,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -55076,13 +55132,58 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "CommentAdd"
+    created: function created() {
+        console.log(this.$route.params.id);
+    },
+
+    name: "CommentAdd",
+
+    data: function data() {
+        return {
+            comment: ''
+        };
+    },
+
+    methods: {
+        saveNewComment: function saveNewComment() {
+            var _this = this;
+
+            var url = window.Laravel.basePath + 'api/comment';
+            var postData = {
+                body: this.comment,
+                videoId: this.$route.params.id
+            };
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url, postData).then(function (response) {
+                window.eventBus.$emit('commentAddEvent', response.data);
+                _this.comment = '';
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -55093,7 +55194,41 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("CommentAdd")])
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-sm-12" }, [
+      _c("div", { staticClass: "form-group mt-1" }, [
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.comment,
+              expression: "comment"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { name: "comment", placeholder: "Add a new comment" },
+          domProps: { value: _vm.comment },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.comment = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", on: { click: _vm.saveNewComment } },
+          [_vm._v("Save")]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55116,8 +55251,19 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "comment-wrapper" },
-    [_c("CommentAdd"), _vm._v(" "), _c("Comment")],
-    1
+    [
+      _c("CommentAdd"),
+      _vm._v(" "),
+      _vm._l(_vm.comments, function(comment) {
+        return _c(
+          "div",
+          { key: comment.id },
+          [_c("Comment", { attrs: { comment: comment } })],
+          1
+        )
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []

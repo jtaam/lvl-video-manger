@@ -47,7 +47,7 @@
                },1);
            },
            imageProgress(instance, img){
-                console.log('instance',instance, 'img',img);
+                // console.log('instance',instance, 'img',img);
                 this.counter++;
                 if (this.counter == this.videos.length){
                     this.relayoutTheGrid();

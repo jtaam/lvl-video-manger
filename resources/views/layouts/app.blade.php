@@ -19,6 +19,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script>
+        window.Laravel = {basePath:'{{url('/')}}/'}
+    </script>
 </head>
 <body>
     <div id="app">

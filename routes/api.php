@@ -19,5 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware'=>'auth:api'],function (){
    Route::post('/video/comments','CommentController@index');
-   Route::post('/comments','CommentController@store');
+   Route::post('comment','CommentController@store');
 });
