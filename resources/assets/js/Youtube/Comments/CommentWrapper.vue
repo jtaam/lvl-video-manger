@@ -20,8 +20,12 @@
         },
 
         created(){
-            window.eventBus.$on('commentAddEvent',comment=>this.handleNewComment(comment))
-            this.loadComments()
+            window.eventBus.$on('commentAddEvent',comment=>this.handleNewCommentAdded(comment))
+            this.loadComments();
+            window.Echo.channel('comments').listen('.comment.created',event=>{
+                console.log('event',event);
+                this.handleNewCommentAdded(event.comment);
+            });
         },
 
         data(){
@@ -30,7 +34,7 @@
             }
         },
         methods:{
-            handleNewComment(comment){
+            handleNewCommentAdded(comment){
                 this.comments.unshift(comment);
             },
             loadComments(){
