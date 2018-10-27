@@ -19,6 +19,8 @@
 </template>
 
 <script>
+
+    import GetVideo from './GetVideo';
     import CommentWrapper from './Comments/CommentWrapper';
 
     export default {
@@ -26,12 +28,15 @@
             CommentWrapper
         },
         created(){
-            if (this.$route.params.video === undefined){
-                this.$router.push({name:'youtube-dashboard'});
-            }
             this.videoId = this.$route.params.id;
             this.url = 'https://www.youtube.com/embed/${this.videoId}';
-            this.video = this.$route.params.video;
+            GetVideo({
+                apiKey: 'AIzaSyDAnYDf-Tgdkgy83OHBiFAN4G_CQUewTSs',
+                videoId:this.videoId,
+            }, response=>{
+                console.log('response video: ', response[0]);
+                this.video = response[0];
+            });
         },
 
         data(){

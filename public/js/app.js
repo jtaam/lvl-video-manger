@@ -64038,6 +64038,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['video'],
@@ -64064,41 +64068,72 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "VideoItem__wrapper" }, [
-    _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
-      _c("img", {
-        staticClass: "card-img-top",
-        attrs: { src: _vm.videoImage, alt: _vm.videoTitle }
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card-body" },
-        [
-          _c("h5", { staticClass: "card-title" }, [
-            _vm._v(_vm._s(_vm.videoTitle))
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "card-text" }, [
-            _vm._v(_vm._s(_vm.videoDescription))
-          ]),
-          _vm._v(" "),
-          _c(
-            "router-link",
-            {
-              staticClass: "btn btn-primary",
-              attrs: {
-                to: {
-                  name: "youtube-video",
-                  params: { id: _vm.video.id.videoId, video: _vm.video }
-                }
+    _c(
+      "div",
+      { staticClass: "card", staticStyle: { width: "18rem" } },
+      [
+        _c(
+          "router-link",
+          {
+            attrs: {
+              to: {
+                name: "youtube-video",
+                params: { id: _vm.video.id.videoId, video: _vm.video }
               }
-            },
-            [_vm._v("\n                Show Video\n            ")]
-          )
-        ],
-        1
-      )
-    ])
+            }
+          },
+          [
+            _c("img", {
+              staticClass: "card-img-top",
+              attrs: { src: _vm.videoImage, alt: _vm.videoTitle }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _c(
+              "router-link",
+              {
+                attrs: {
+                  to: {
+                    name: "youtube-video",
+                    params: { id: _vm.video.id.videoId, video: _vm.video }
+                  }
+                }
+              },
+              [
+                _c("h5", { staticClass: "card-title text-dark" }, [
+                  _vm._v(_vm._s(_vm.videoTitle))
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text" }, [
+              _vm._v(_vm._s(_vm.videoDescription))
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-primary",
+                attrs: {
+                  to: {
+                    name: "youtube-video",
+                    params: { id: _vm.video.id.videoId }
+                  }
+                }
+              },
+              [_vm._v("\n                Show Video\n            ")]
+            )
+          ],
+          1
+        )
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -64467,7 +64502,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64478,8 +64513,10 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Comments_CommentWrapper__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Comments_CommentWrapper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Comments_CommentWrapper__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GetVideo__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GetVideo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__GetVideo__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Comments_CommentWrapper__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Comments_CommentWrapper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Comments_CommentWrapper__);
 //
 //
 //
@@ -64500,20 +64537,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        CommentWrapper: __WEBPACK_IMPORTED_MODULE_0__Comments_CommentWrapper___default.a
+        CommentWrapper: __WEBPACK_IMPORTED_MODULE_1__Comments_CommentWrapper___default.a
     },
     created: function created() {
-        if (this.$route.params.video === undefined) {
-            this.$router.push({ name: 'youtube-dashboard' });
-        }
+        var _this = this;
+
         this.videoId = this.$route.params.id;
         this.url = 'https://www.youtube.com/embed/${this.videoId}';
-        this.video = this.$route.params.video;
+        __WEBPACK_IMPORTED_MODULE_0__GetVideo___default()({
+            apiKey: 'AIzaSyDAnYDf-Tgdkgy83OHBiFAN4G_CQUewTSs',
+            videoId: this.videoId
+        }, function (response) {
+            console.log('response video: ', response[0]);
+            _this.video = response[0];
+        });
     },
     data: function data() {
         return {
@@ -65131,6 +65175,38 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var axios = __webpack_require__(6);
+var BASE_URL = 'https://www.googleapis.com/youtube/v3/videos';
+
+module.exports = function (options, callback) {
+    if (!options.apiKey) {
+        throw new Error('Youtube search require a key');
+    }
+
+    var params = {
+        part: 'snippet',
+        key: options.apiKey,
+        id: options.videoId,
+        type: 'video'
+    };
+
+    axios.get(BASE_URL, { params: params }).then(function (response) {
+        // console.log('search response', response);
+        if (callback) {
+            callback(response.data.items);
+        }
+    }).catch(function (error) {
+        return console.error(error);
+    });
+};
 
 /***/ })
 /******/ ]);
