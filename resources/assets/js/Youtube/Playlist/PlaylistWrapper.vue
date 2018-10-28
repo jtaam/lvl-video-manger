@@ -6,7 +6,7 @@
             <div class="list">
                 <div class="mb-2 clearfix">
                     <div class="float-left">My Playlists</div>
-                    <div class="float-right">Close</div>
+                    <button class="float-right btn btn-warning btn-sm" @click="playListOpen">X</button>
                 </div>
 
                 <div class="mb-2 clearfix">
@@ -69,12 +69,28 @@
                     .then(response => {
                         this.playlist.unshift(response.data);
                         this.playlistName = '';
-                })
+                    })
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .playlist-wrapper {
+        position: relative;
+        .list-wrapper {
+            position: absolute;
+            top: -135px;
+            z-index: 999;
+            background-color: white;
+            padding: 1rem;
+            border: 1px solid #efefef;
+            min-width: 29rem;
+            .list {
+                .list-group-item {
+                    padding: 0.45rem 1.25rem;
+                }
+            }
+        }
+    }
 </style>
