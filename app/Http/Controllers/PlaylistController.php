@@ -10,9 +10,9 @@ class PlaylistController extends Controller
 {
     public function index()
     {
-        $playlist = Playlist::where('user_id', Auth::user()->id)->orderBy('name', 'asc');
+        $playlists = Playlist::where('user_id', Auth::user()->id)->orderBy('name', 'asc')->get();
 
-        return response()->json($playlist, 200);
+        return response()->json($playlists, 200);
     }
 
     public function store(Request $request)
