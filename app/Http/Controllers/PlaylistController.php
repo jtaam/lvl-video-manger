@@ -22,6 +22,12 @@ class PlaylistController extends Controller
             'isPrivate' => 'required',
         ]);
 
+        $count = Playlist::where('name',$request->input('name'))->where('user_id',$request->user()->id)->count();
+
+        if ($count){
+            return response()->json(['message'=>"Playlist '{$request->input('name')}' already exists."],403);
+        }
+
         $playlist = Playlist::create([
             'name' => $request->input('name'),
             'user_id' => $request->user()->id,

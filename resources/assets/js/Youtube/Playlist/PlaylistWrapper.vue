@@ -3,32 +3,43 @@
         <button class="btn btn-sm btn-primary" @click="playListOpen">+ Add</button>
 
         <div class="list-wrapper" v-if="showPlaylist">
-            <div class="list">
-                <div class="mb-2 clearfix">
-                    <div class="float-left">My Playlists</div>
-                    <button class="float-right btn btn-warning btn-sm" @click="playListOpen">X</button>
-                </div>
 
-                <div class="mb-2 clearfix">
-                    <ul class="list-group">
-                        <li class="list-group-item" v-for="item in playlist" v-bind:key="item.id">{{item.name}}</li>
-                    </ul>
-                </div>
-
-                <form v-on:submit.prevent="handleSavePlaylist">
-                    <div class="form-group row">
-                        <div class="col-sm-8">
-                            <input type="text" placeholder="Create new playlist" class="form-control"
-                                   v-model="playlistName">
-                        </div>
-
-                        <div class="col-sm-4">
-                            <input type="checkbox" name="private" v-model="isPrivate"> Private
-                        </div>
+            <div v-if="!loading">
+                <div class="list">
+                    <div class="mb-2 clearfix">
+                        <div class="float-left">My Playlists</div>
+                        <button class="float-right btn btn-warning btn-sm" @click="playListOpen">X</button>
                     </div>
-                </form>
 
+                    <div class="mb-2 clearfix">
+                        <ul class="list-group">
+                            <li class="list-group-item" v-for="item in playlist" v-bind:key="item.id">{{item.name}}</li>
+                        </ul>
+                    </div>
+
+                    <form v-on:submit.prevent="handleSavePlaylist">
+                        <div class="form-group row">
+                            <div class="col-sm-8">
+                                <input type="text" placeholder="Create new playlist" class="form-control"
+                                       v-model="playlistName">
+                            </div>
+
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="private" v-model="isPrivate"> Private
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
             </div>
+
+            <div v-if="loading">
+                <i class="fas fa-sync fa-spin"></i>
+            </div>
+
+
+
+
         </div>
     </div>
 </template>
@@ -43,6 +54,7 @@
                 showPlaylist: false,
                 playlistName: '',
                 isPrivate: false,
+                loading:true,
             }
         },
 
@@ -51,12 +63,13 @@
                 this.loadUserPlaylists();
             },
             loadUserPlaylists() {
+                this.showPlaylist = !this.showPlaylist;
                 axios.get('/api/user/playlists').then(response => {
                     setTimeout(() => {
-                        console.info(response.data);
-                        this.showPlaylist = !this.showPlaylist;
+                        // console.info(response.data);
                         this.playlist = response.data;
-                    }, 300)
+                        this.loading = false;
+                    }, 1000)
                 })
             },
             handleSavePlaylist() {
@@ -69,6 +82,12 @@
                     .then(response => {
                         this.playlist.unshift(response.data);
                         this.playlistName = '';
+                    })
+                    .catch(error => {
+                        if (error.response.status === 403){
+                            alert(error.response.data.message);
+                        }
+                        console.error(error.response);
                     })
             }
         }

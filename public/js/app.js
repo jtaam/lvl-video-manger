@@ -65157,7 +65157,7 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(111)
+  __webpack_require__(102)
 }
 var normalizeComponent = __webpack_require__(3)
 /* script */
@@ -65202,13 +65202,62 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 102 */,
-/* 103 */,
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(103);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("06d08c30", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-05c7f1e2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PlaylistWrapper.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-05c7f1e2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PlaylistWrapper.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.playlist-wrapper[data-v-05c7f1e2] {\n  position: relative;\n}\n.playlist-wrapper .list-wrapper[data-v-05c7f1e2] {\n    position: absolute;\n    top: -135px;\n    z-index: 999;\n    background-color: white;\n    padding: 1rem;\n    border: 1px solid #efefef;\n    min-width: 29rem;\n}\n.playlist-wrapper .list-wrapper .list .list-group-item[data-v-05c7f1e2] {\n      padding: 0.45rem 1.25rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
 /* 104 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -65253,7 +65302,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             playlist: null,
             showPlaylist: false,
             playlistName: '',
-            isPrivate: false
+            isPrivate: false,
+            loading: true
         };
     },
 
@@ -65265,12 +65315,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         loadUserPlaylists: function loadUserPlaylists() {
             var _this = this;
 
+            this.showPlaylist = !this.showPlaylist;
             axios.get('/api/user/playlists').then(function (response) {
                 setTimeout(function () {
-                    console.info(response.data);
-                    _this.showPlaylist = !_this.showPlaylist;
+                    // console.info(response.data);
                     _this.playlist = response.data;
-                }, 300);
+                    _this.loading = false;
+                }, 1000);
             });
         },
         handleSavePlaylist: function handleSavePlaylist() {
@@ -65284,6 +65335,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.post('/api/playlist', postData).then(function (response) {
                 _this2.playlist.unshift(response.data);
                 _this2.playlistName = '';
+            }).catch(function (error) {
+                if (error.response.status === 403) {
+                    alert(error.response.data.message);
+                }
+                console.error(error.response);
             });
         }
     }
@@ -65309,119 +65365,128 @@ var render = function() {
     _vm._v(" "),
     _vm.showPlaylist
       ? _c("div", { staticClass: "list-wrapper" }, [
-          _c("div", { staticClass: "list" }, [
-            _c("div", { staticClass: "mb-2 clearfix" }, [
-              _c("div", { staticClass: "float-left" }, [
-                _vm._v("My Playlists")
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "float-right btn btn-warning btn-sm",
-                  on: { click: _vm.playListOpen }
-                },
-                [_vm._v("X")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "mb-2 clearfix" }, [
-              _c(
-                "ul",
-                { staticClass: "list-group" },
-                _vm._l(_vm.playlist, function(item) {
-                  return _c(
-                    "li",
-                    { key: item.id, staticClass: "list-group-item" },
-                    [_vm._v(_vm._s(item.name))]
-                  )
-                })
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.handleSavePlaylist($event)
-                  }
-                }
-              },
-              [
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("div", { staticClass: "col-sm-8" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.playlistName,
-                          expression: "playlistName"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        placeholder: "Create new playlist"
+          !_vm.loading
+            ? _c("div", [
+                _c("div", { staticClass: "list" }, [
+                  _c("div", { staticClass: "mb-2 clearfix" }, [
+                    _c("div", { staticClass: "float-left" }, [
+                      _vm._v("My Playlists")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "float-right btn btn-warning btn-sm",
+                        on: { click: _vm.playListOpen }
                       },
-                      domProps: { value: _vm.playlistName },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.playlistName = $event.target.value
-                        }
-                      }
-                    })
+                      [_vm._v("X")]
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-4" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.isPrivate,
-                          expression: "isPrivate"
-                        }
-                      ],
-                      attrs: { type: "checkbox", name: "private" },
-                      domProps: {
-                        checked: Array.isArray(_vm.isPrivate)
-                          ? _vm._i(_vm.isPrivate, null) > -1
-                          : _vm.isPrivate
-                      },
+                  _c("div", { staticClass: "mb-2 clearfix" }, [
+                    _c(
+                      "ul",
+                      { staticClass: "list-group" },
+                      _vm._l(_vm.playlist, function(item) {
+                        return _c(
+                          "li",
+                          { key: item.id, staticClass: "list-group-item" },
+                          [_vm._v(_vm._s(item.name))]
+                        )
+                      })
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "form",
+                    {
                       on: {
-                        change: function($event) {
-                          var $$a = _vm.isPrivate,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 && (_vm.isPrivate = $$a.concat([$$v]))
-                            } else {
-                              $$i > -1 &&
-                                (_vm.isPrivate = $$a
-                                  .slice(0, $$i)
-                                  .concat($$a.slice($$i + 1)))
-                            }
-                          } else {
-                            _vm.isPrivate = $$c
-                          }
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.handleSavePlaylist($event)
                         }
                       }
-                    }),
-                    _vm._v(" Private\n                    ")
-                  ])
+                    },
+                    [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _c("div", { staticClass: "col-sm-8" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.playlistName,
+                                expression: "playlistName"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              placeholder: "Create new playlist"
+                            },
+                            domProps: { value: _vm.playlistName },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.playlistName = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-sm-4" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.isPrivate,
+                                expression: "isPrivate"
+                              }
+                            ],
+                            attrs: { type: "checkbox", name: "private" },
+                            domProps: {
+                              checked: Array.isArray(_vm.isPrivate)
+                                ? _vm._i(_vm.isPrivate, null) > -1
+                                : _vm.isPrivate
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$a = _vm.isPrivate,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = null,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.isPrivate = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.isPrivate = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
+                                } else {
+                                  _vm.isPrivate = $$c
+                                }
+                              }
+                            }
+                          }),
+                          _vm._v(" Private\n                        ")
+                        ])
+                      ])
+                    ]
+                  )
                 ])
-              ]
-            )
-          ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.loading
+            ? _c("div", [_c("i", { staticClass: "fas fa-sync fa-spin" })])
+            : _vm._e()
         ])
       : _vm._e()
   ])
@@ -65508,49 +65573,6 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(112);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("06d08c30", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-05c7f1e2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PlaylistWrapper.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-05c7f1e2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PlaylistWrapper.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 112 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.playlist-wrapper[data-v-05c7f1e2] {\n  position: relative;\n}\n.playlist-wrapper .list-wrapper[data-v-05c7f1e2] {\n    position: absolute;\n    top: -135px;\n    z-index: 999;\n    background-color: white;\n    padding: 1rem;\n    border: 1px solid #efefef;\n    min-width: 29rem;\n}\n.playlist-wrapper .list-wrapper .list .list-group-item[data-v-05c7f1e2] {\n      padding: 0.45rem 1.25rem;\n}\n", ""]);
-
-// exports
-
 
 /***/ })
 /******/ ]);
