@@ -9,6 +9,8 @@ class PlaylistEntryController extends Controller
 {
     public function store(Request $request)
     {
+//        abort(500,'some error occured');
+
         $data = $this->validate($request, [
             'videoId' => 'required',
             'playlistId' => 'required|exists:playlists,id'

@@ -1,5 +1,7 @@
 <template>
     <div class="playlist-wrapper">
+        <notifications group="foo" :classes="notificationClasses"/>
+
         <button class="btn btn-sm btn-primary" @click="playListOpen">+ Add</button>
 
         <div class="list-wrapper" v-if="showPlaylist">
@@ -13,7 +15,7 @@
 
                     <div class="mb-2 clearfix">
                         <ul class="list-group">
-                            <playlist-item  v-for="item in playlist" v-bind:key="item.id" :item="item"></playlist-item>
+                            <playlist-item v-for="item in playlist" v-bind:key="item.id" :item="item"></playlist-item>
                         </ul>
                     </div>
 
@@ -38,8 +40,6 @@
             </div>
 
 
-
-
         </div>
     </div>
 </template>
@@ -49,17 +49,38 @@
 
     export default {
         name: "PlaylistWrapper",
-        components:{
+        components: {
             PlaylistItem,
+        },
+
+        created() {
+            window.eventBus.$on('successPlaylistItemAdd', data => {
+                this.notificationClasses = 'vue-notification success'
+                this.$notify({
+                    group: 'foo',
+                    title: 'Success!',
+                    text: data
+                });
+            });
+
+            window.eventBus.$on('errorPlaylistItemNotAdd', data => {
+                this.notificationClasses = 'vue-notification error'
+                this.$notify({
+                    group: 'foo',
+                    title: 'Error!',
+                    text: data
+                });
+            });
         },
 
         data() {
             return {
+                notificationClasses: null,
                 playlist: null,
                 showPlaylist: false,
                 playlistName: '',
                 isPrivate: false,
-                loading:true,
+                loading: true,
             }
         },
 
@@ -89,7 +110,7 @@
                         this.playlistName = '';
                     })
                     .catch(error => {
-                        if (error.response.status === 403){
+                        if (error.response.status === 403) {
                             alert(error.response.data.message);
                         }
                         console.error(error.response);
@@ -117,4 +138,5 @@
             }
         }
     }
+
 </style>

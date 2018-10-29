@@ -2,11 +2,14 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import VueRouter from 'vue-router';
+
 import YoutubeDash from './Youtube/YoutubeDash';
 import VideoDetail from './Youtube/VideoDetail';
 import MyPlaylists from './Youtube/MyPlaylists';
+import Notifications from 'vue-notification';
 
 Vue.use(VueRouter);
+Vue.use(Notifications);
 
 
 Vue.component('youtube-dashboard', require('./Youtube/YoutubeDash.vue'));
