@@ -6,9 +6,10 @@
             <small>Channel: {{video.snippet.channelTitle}}</small>
 
             <div class="embed-responsive embed-responsive-16by9 mb-3">
-                <iframe v-bind:src="url" class="embed-responsive-item" width="560" height="315" frameborder="0" allow="encrypted-media"></iframe>
-                <!--<youtube :video-id="videoId" ref="youtube" @ended="videoEnded"></youtube>-->
-                <!--<button @click="playVideo">play</button>-->
+                <div class="embed-responsive embed-responsive-16by9 mb-3">
+                    <youtube :video-id="videoId" ref="youtube" @ended="videoEnded"></youtube>
+                    <button @click="playVideo">play</button>
+                </div>
             </div>
 
             <p>{{video.snippet.description}}</p>

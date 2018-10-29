@@ -23,7 +23,7 @@
         created() {
             Search({
                 apiKey: 'AIzaSyDAnYDf-Tgdkgy83OHBiFAN4G_CQUewTSs',
-                term: 'x men',
+                term: 'laravel api',
                 items: 10
             }, response => this.handleSearchResults(response));
 

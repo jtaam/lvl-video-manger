@@ -2,6 +2,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import VueRouter from 'vue-router';
+import VueYoutube from 'vue-youtube';
 
 import YoutubeDash from './Youtube/YoutubeDash';
 import VideoDetail from './Youtube/VideoDetail';
@@ -9,6 +10,7 @@ import MyPlaylists from './Youtube/MyPlaylists';
 import Notifications from 'vue-notification';
 
 Vue.use(VueRouter);
+Vue.use(VueYoutube);
 Vue.use(Notifications);
 
 
