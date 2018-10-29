@@ -13,7 +13,7 @@
 
                     <div class="mb-2 clearfix">
                         <ul class="list-group">
-                            <li class="list-group-item" v-for="item in playlist" v-bind:key="item.id">{{item.name}}</li>
+                            <playlist-item  v-for="item in playlist" v-bind:key="item.id" :item="item"></playlist-item>
                         </ul>
                     </div>
 
@@ -45,8 +45,13 @@
 </template>
 
 <script>
+    import PlaylistItem from './PlaylistItem';
+
     export default {
         name: "PlaylistWrapper",
+        components:{
+            PlaylistItem,
+        },
 
         data() {
             return {
