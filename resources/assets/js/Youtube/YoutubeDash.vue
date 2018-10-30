@@ -14,6 +14,7 @@
     import VideoGroup from './VideoGroup';
     import Finder from './Finder';
     import Search from './Search';
+    import LocalDB from './../LocalDB';
 
     export default {
         components: {
@@ -21,14 +22,19 @@
         },
 
         created() {
+            // console.log(this.localDB.set('search','laracon'));
+            // this.localDB.set('search',[{name:'jhon doe'}]);
+            var searchString = (this.localDB.get('search')) ? this.localDB.get('search') : 'laravel api';
+
             Search({
                 apiKey: 'AIzaSyDAnYDf-Tgdkgy83OHBiFAN4G_CQUewTSs',
-                term: 'laravel api',
+                term: searchString,
                 items: 10
             }, response => this.handleSearchResults(response));
 
-            window.eventBus.$on('searchForYoutubeStarted', () => {
+            window.eventBus.$on('searchForYoutubeStarted', (string) => {
                 this.loading = true;
+                this.localDB.set('search',string);
             });
 
             window.eventBus.$on('searchResultFromYoutube', videos => {
@@ -41,7 +47,8 @@
         data() {
             return {
                 videos: null,
-                loading: true
+                loading: true,
+                localDB: new LocalDB(),
             }
         },
 
